@@ -2,6 +2,7 @@
 {
     public enum MyFeatureFlags
     {
-        NewFeature
+        NewFeature,
+        VIP
     }
 }

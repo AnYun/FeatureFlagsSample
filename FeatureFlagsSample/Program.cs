@@ -33,7 +33,10 @@ namespace FeatureFlagsSample
 
             builder.Services.AddFeatureManagement()
                 .AddFeatureFilter<TimeWindowFilter>()
-                .AddFeatureFilter<PercentageFilter>();
+                .AddFeatureFilter<PercentageFilter>()
+                .AddFeatureFilter<TargetingFilter>();
+
+            builder.Services.AddSingleton<ITargetingContextAccessor, VIPTargetingContextAccessor>();
 
             var app = builder.Build();
 
