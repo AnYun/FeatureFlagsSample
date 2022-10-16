@@ -24,6 +24,9 @@ namespace FeatureFlagsSample.Controllers
             var user = AddUser("user@sample.com");
             _ = _userManager.AddToRoleAsync(user, "User").Result;
 
+            var user2 = AddUser("user@contoso.com");
+            _ = _userManager.AddToRoleAsync(user2, "User").Result;
+
             var vipUser = AddUser("vip@sample.com");
             _ = _userManager.AddToRoleAsync(vipUser, "User").Result;
             _ = _userManager.AddToRoleAsync(vipUser, "Vip").Result;
