@@ -31,7 +31,9 @@ namespace FeatureFlagsSample
                     .Connect(appConfigConnectionString).UseFeatureFlags());
             });
 
-            builder.Services.AddFeatureManagement().AddFeatureFilter<TimeWindowFilter>();
+            builder.Services.AddFeatureManagement()
+                .AddFeatureFilter<TimeWindowFilter>()
+                .AddFeatureFilter<PercentageFilter>();
 
             var app = builder.Build();
 
