@@ -1,6 +1,8 @@
 using FeatureFlagsSample.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.FeatureManagement;
+using Microsoft.FeatureManagement.FeatureFilters;
 
 namespace FeatureFlagsSample
 {
@@ -20,6 +22,16 @@ namespace FeatureFlagsSample
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            var appConfigConnectionString = builder.Configuration.GetConnectionString("AppConfig");
+
+            builder.Host.ConfigureAppConfiguration(builder =>
+            {
+                builder.AddAzureAppConfiguration(options => options
+                    .Connect(appConfigConnectionString).UseFeatureFlags());
+            });
+
+            builder.Services.AddFeatureManagement().AddFeatureFilter<TimeWindowFilter>();
 
             var app = builder.Build();
 
