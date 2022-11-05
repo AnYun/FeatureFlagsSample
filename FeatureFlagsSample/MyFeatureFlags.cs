@@ -3,6 +3,7 @@
     public enum MyFeatureFlags
     {
         NewFeature,
-        VIP
+        VIP,
+        CustomFeature
     }
 }

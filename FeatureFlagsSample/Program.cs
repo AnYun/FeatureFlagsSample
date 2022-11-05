@@ -40,7 +40,8 @@ namespace FeatureFlagsSample
             builder.Services.AddFeatureManagement()
                 .AddFeatureFilter<TimeWindowFilter>()
                 .AddFeatureFilter<PercentageFilter>()
-                .AddFeatureFilter<TargetingFilter>();
+                .AddFeatureFilter<TargetingFilter>()
+                .AddFeatureFilter<CustomFeatureFilter>();
 
             builder.Services.AddAzureAppConfiguration();
 
