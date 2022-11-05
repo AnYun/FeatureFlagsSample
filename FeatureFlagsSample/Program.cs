@@ -28,13 +28,21 @@ namespace FeatureFlagsSample
             builder.Host.ConfigureAppConfiguration(builder =>
             {
                 builder.AddAzureAppConfiguration(options => options
-                    .Connect(appConfigConnectionString).UseFeatureFlags());
+                    .Connect(appConfigConnectionString)
+                    .ConfigureRefresh(refreshOptions =>
+                    {
+                        refreshOptions.Register("Version", refreshAll: true);
+                        refreshOptions.SetCacheExpiration(TimeSpan.FromSeconds(1));
+                    })
+                    .UseFeatureFlags());
             });
 
             builder.Services.AddFeatureManagement()
                 .AddFeatureFilter<TimeWindowFilter>()
                 .AddFeatureFilter<PercentageFilter>()
                 .AddFeatureFilter<TargetingFilter>();
+
+            builder.Services.AddAzureAppConfiguration();
 
             builder.Services.AddSingleton<ITargetingContextAccessor, VIPTargetingContextAccessor>();
 
@@ -59,6 +67,8 @@ namespace FeatureFlagsSample
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseAzureAppConfiguration();
 
             app.MapControllerRoute(
                 name: "default",
